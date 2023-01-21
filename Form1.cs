@@ -40,7 +40,7 @@ namespace StockClient
                     Result res = client.Logout(tempuid);
                     uidLabel.Text = res.ToString();
                     uid = "";
-                    Hide();
+                    HideItems();
                 }
                 catch
                 {
@@ -107,7 +107,7 @@ namespace StockClient
                 if (tempuid.Id.ToString() != "Login Faild")
                 {
                     uid = tempuid.ToString().Substring(9, 36);
-                    Hide();
+                    HideItems();
                 }
                 else
                 {
@@ -225,7 +225,7 @@ namespace StockClient
             return itemNumber.Length == 6;
         }
 
-        private void Hide()
+        private void HideItems()
         {
             if (userNameTxtBox.Visible)
             {
