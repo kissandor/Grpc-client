@@ -143,7 +143,7 @@ namespace StockClient
             this.txtBoxProductNumber.Location = new System.Drawing.Point(109, 32);
             this.txtBoxProductNumber.Name = "txtBoxProductNumber";
             this.txtBoxProductNumber.Size = new System.Drawing.Size(100, 23);
-            this.txtBoxProductNumber.TabIndex = 4;
+            this.txtBoxProductNumber.TabIndex = 2;
             // 
             // label2
             // 
@@ -151,7 +151,7 @@ namespace StockClient
             this.label2.Location = new System.Drawing.Point(7, 32);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(103, 15);
-            this.label2.TabIndex = 3;
+            this.label2.TabIndex = 1;
             this.label2.Text = "Product number : ";
             // 
             // txtBoxProductName
@@ -159,7 +159,7 @@ namespace StockClient
             this.txtBoxProductName.Location = new System.Drawing.Point(109, 61);
             this.txtBoxProductName.Name = "txtBoxProductName";
             this.txtBoxProductName.Size = new System.Drawing.Size(100, 23);
-            this.txtBoxProductName.TabIndex = 2;
+            this.txtBoxProductName.TabIndex = 4;
             // 
             // label1
             // 
@@ -167,7 +167,7 @@ namespace StockClient
             this.label1.Location = new System.Drawing.Point(7, 61);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 15);
-            this.label1.TabIndex = 1;
+            this.label1.TabIndex = 3;
             this.label1.Text = "Product name :";
             // 
             // btnAddProduct
@@ -229,7 +229,7 @@ namespace StockClient
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(38, 15);
             this.label4.TabIndex = 13;
-            this.label4.Text = "label4";
+            this.label4.Text = "";
             // 
             // dataGridView1
             // 

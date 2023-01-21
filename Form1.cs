@@ -1,16 +1,9 @@
 ﻿using Grpc.Net.Client;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using StockClient;
 using Grpc.Core;
-using System.IO;
+
 
 namespace StockClient
 {
@@ -19,7 +12,7 @@ namespace StockClient
 
         GrpcChannel channel = GrpcChannel.ForAddress("https://localhost:5001");
         Stock.StockClient client;
-        static string uid = null;
+        string uid = null;
 
         public Form1()
         {
@@ -34,18 +27,27 @@ namespace StockClient
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
+            if (String.IsNullOrEmpty(uid))
             {
-                Session_Id tempuid = new Session_Id();
-                tempuid.Id = uid;
-                Result res = client.Logout(tempuid);
-                uidLabel.Text = res.ToString();
+                uidLabel.Text = "You are not logged in!";
             }
-            catch
+            else
             {
-                uidLabel.Text = "Server is offline!";
-            }
+                try
+                {
+                    Session_Id tempuid = new Session_Id();
+                    tempuid.Id = uid;
+                    Result res = client.Logout(tempuid);
+                    uidLabel.Text = res.ToString();
+                    uid = "";
+                    Hide();
+                }
+                catch
+                {
+                    uidLabel.Text = "Server is offline!";
+                }
 
+            }
         }
 
         private void btnAddProduct_Click(object sender, EventArgs e)
@@ -58,8 +60,8 @@ namespace StockClient
                     throw new Exception("Missing product name");
                 newItem.Name = txtBoxProductName.Text;
 
-                if (txtBoxProductNumber.Text == "")
-                    throw new Exception("Missing product number");
+                if (!IsItemNumberVaid(txtBoxProductNumber.Text))
+                    throw new Exception("Incorrect item number - FFF000");
                 newItem.Code = txtBoxProductNumber.Text;
 
                 if (int.Parse(txtBoxProductQty.Text) < 0)
@@ -69,6 +71,10 @@ namespace StockClient
                 newItem.Uid = uid;
                 Result res = client.ItemAdd(newItem);
                 uidLabel.Text = res.ToString();
+
+                txtBoxProductName.Clear();
+                txtBoxProductNumber.Clear();
+                txtBoxProductQty.Clear();
 
                 lbtnList_Click_1(sender, e);
             }
@@ -101,11 +107,15 @@ namespace StockClient
                 if (tempuid.Id.ToString() != "Login Faild")
                 {
                     uid = tempuid.ToString().Substring(9, 36);
+                    Hide();
                 }
                 else
                 {
                     uid = "";
                 }
+
+                userNameTxtBox.Clear();
+                passwordTxtBox.Clear();
 
                 uidLabel.Text = uid;
             }
@@ -207,6 +217,31 @@ namespace StockClient
                     }
 
                 }
+            }
+        }
+
+        private bool IsItemNumberVaid(String itemNumber)
+        {
+            return itemNumber.Length == 6;
+        }
+
+        private void Hide()
+        {
+            if (userNameTxtBox.Visible)
+            {
+                userNameTxtBox.Hide();
+                passwordTxtBox.Hide();
+                lblUserName.Hide();
+                lblPassword.Hide();
+                loginBtn.Hide();
+            }
+            else
+            {
+                userNameTxtBox.Show();
+                passwordTxtBox.Show();
+                lblUserName.Show();
+                lblPassword.Show();
+                loginBtn.Show();
             }
         }
 
